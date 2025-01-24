@@ -4,12 +4,7 @@ using System.Collections.Generic;
 namespace testSomething
 {
    
-    enum CardValue
-    {
-        
-    }
-
-
+  
 
     public class CardDeck
     {
@@ -33,6 +28,19 @@ namespace testSomething
             {2,"club" },
             {3,"spade" }
         };
+        Dictionary<int, int> cardsValue = new Dictionary<int, int>
+        {
+            {0,6},
+            {1,7},
+            {2,8},
+            {3,9},
+            {4,10},
+            {5,10},
+            {6,10},
+            {7,10},
+            {8,1},
+        };
+
 
         const int NumberCards = 36; 
         List<Card> cards = new List<Card>();
@@ -46,7 +54,9 @@ namespace testSomething
 
                 for(int  j = 0; j < 9; j++)
                 {
-                    cards.Add(new Card(j, cardsType[i], cardsName[j]));
+          
+                  cards.Add(new Card(cardsValue[j], cardsType[i], cardsName[j]));
+            
                 }
    
             }
@@ -66,14 +76,16 @@ namespace testSomething
         public int value { get; set; }
         public string CardType { get; set; } 
         public string Name { get; set; }
+        
 
 
 
-        public Card(int value, string CardType, string Name) 
+        public Card(int value, string CardType, string Name ) 
         {
             this.value = value;
             this.CardType = CardType;
             this.Name = Name;
+           
         }
 
 
