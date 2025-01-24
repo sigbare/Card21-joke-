@@ -1,0 +1,15 @@
+Objective: Reach a total score as close to 21 as possible without going over.
+Deck: Use a 36-card deck consisting of ranks from 6 through Ace.
+Card Values:
+Cards from 6 to 9 are worth their face value.
+Tens, Jacks, Queens, and Kings are each worth 10 points.
+Aces 11 points
+Gameplay: player starts with two cards dealt by the dealer.
+Players take turns deciding whether to "hit" (take another card) or "stand" (keep current total).
+If a player's total exceeds 21, they "bust" and lose immediately.
+Winning Conditions:
+The player whose final score is closest to 21 without exceeding it wins.
+If both players bust, the one who got closer to 21 wins.
+If there's a tie at 21, it's considered a draw.
+Additional Rules:
+In some variations, an initial hand of 21 (e.g., an ace and a ten-valued card) is called a "blackjack" and may have special rules or payouts.
