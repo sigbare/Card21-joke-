@@ -13,6 +13,10 @@ namespace testSomething
         private static Random rng = new Random();
         private static int shoot = -1;
         private static int dilshoot = -1;
+
+        private static bool YouChshoot = false;
+        private static bool dilChshoot = false;
+
         static void Main(string[] args)
         {
          
@@ -31,7 +35,7 @@ namespace testSomething
                     NewGame();
                     break;
                 }
-                   
+                command = Console.ReadLine(); 
             }
 
             Console.ReadLine();
@@ -75,7 +79,10 @@ namespace testSomething
                     break;
             }
             
-            Revolver revolver = new Revolver(dif);
+            Revolver Your_revolver = new Revolver(dif);
+            Revolver Dil_revolver = new Revolver(dif);
+
+
 
             Console.WriteLine("Start game");
 
@@ -88,24 +95,54 @@ namespace testSomething
             List<string> yourHand  = new List<string>();
 
             Enumerable.Range(1,2).ToList().ForEach(_ => TakeCard(ref yourHand, ref value, ref cardsDeck));
-            while (game)
-            {
-                OutPut(yourHand, value);
-
-                Console.WriteLine("Is that enough or do you want to take another card  ");
-                Console.WriteLine("yes/no");
-
-                var command = Console.ReadLine();
-                if (command == "yes")
-                    TakeCard(ref yourHand,ref value, ref cardsDeck);
-                if (command == "no")
-                {
-                    game = false;
-                    break;
-                }
-            }
-            CheckHand(ref value);
            
+            while (true)
+            {
+                while (game)
+                {
+                    OutPut(yourHand, value);
+
+                    Console.WriteLine("Is that enough or do you want to take another card  ");
+                    Console.WriteLine("yes/no");
+
+                    var command = Console.ReadLine();
+                    if (command == "yes")
+                        TakeCard(ref yourHand, ref value, ref cardsDeck);
+                    if (command == "no")
+                    {
+                        // game = false;
+                        break;
+                    }
+                }
+                CheckHand(ref value, ref Your_revolver, ref Dil_revolver);
+
+                if (YouChshoot)
+                {
+                    Console.WriteLine("You dead");
+                       break;
+                }
+                if (dilChshoot)
+                {
+                    Console.WriteLine("dil dead");
+                       break;
+                }
+
+                yourHand.Clear();
+                value = 0;
+                Enumerable.Range(1, 2).ToList().ForEach(_ => TakeCard(ref yourHand, ref value, ref cardsDeck));
+                Console.WriteLine("________________________________");
+            }
+            
+         
+           
+        }
+        public static bool CheckBull(Revolver revolver, int shoot)
+        {
+            if (revolver.drm[shoot] == 1)
+            {
+                return true;
+            }
+            return false;
         }
 
         public static string? StartGame() 
@@ -188,12 +225,12 @@ namespace testSomething
         public static int DilerHand()
         {
             Random rnd = new Random();
-           int value = rnd.Next(14, 21);
+           int value = rnd.Next(17, 21);
             return value;
         }
 
-
-        public static void CheckHand(ref int value)
+        
+        public static void CheckHand(ref int value, ref Revolver you , ref Revolver dil)
         {
             int dilHand = DilerHand();
 
@@ -203,6 +240,7 @@ namespace testSomething
                 Console.WriteLine($"diller score: {dilHand}");
                 Console.WriteLine("you win");
                 dilshoot++;
+               dilChshoot = CheckBull(dil,dilshoot);
             }
             if (value == dilHand && value < 22)
             {
@@ -211,14 +249,15 @@ namespace testSomething
 
                 
             }
-            if(value < dilHand && value < 22)
+            if(value < dilHand || value > 22)
             {
                 Console.WriteLine($"diller score: {dilHand}");
                 Console.WriteLine("you lose");
                 shoot++;
-            }
 
-            
+                YouChshoot = CheckBull(dil, shoot);
+            }
+  
         }
 
 
@@ -234,7 +273,7 @@ namespace testSomething
         {"hard",4 }
 
     };
-
+        public int[] drm = new int[5];  
         
         public int countBull { get; set; }
 
@@ -242,21 +281,22 @@ namespace testSomething
         {
            
            this.countBull = Dif[complexity];
+            this.drm = ReloadRevolver(drm);
+
         }
 
 
-         public int[] ReloadRevolver()
+         public int[] ReloadRevolver(int[] drm)
         {
             Random rng = new Random();
 
-            int[] drum = new int[5];
+            int[] drum = drm;
 
             int count = countBull;
-            for(int i = 0; i < drum.Length; ++i)
+            for(int i = 0; i < count; ++i)
             {
                 if(count > 0) { drum[i] = 1; }
-                
-                drum[i] = 0;
+             
                 count--;
             }
             int n = drum.Length;
