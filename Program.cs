@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 namespace testSomething
 {
+   
+
+
     internal class Program
     {
         private static Random rng = new Random();
@@ -61,6 +65,18 @@ namespace testSomething
 
         public static void NewGame()
         {
+            Console.WriteLine("choose the difficulty: easy/medium/hard ");
+            string dif = string.Empty;
+            while (true)
+            {
+                
+               dif = Console.ReadLine() ?? dif;
+                if (dif == "easy" || dif == "medium" || dif == "hard")
+                    break;
+            }
+            
+            Revolver revolver = new Revolver(dif);
+
             Console.WriteLine("Start game");
 
             List<Card> cardsDeck = CreatNewCardDeck();
@@ -108,14 +124,14 @@ namespace testSomething
                 if (str != null && (str == "info" || str == "start"))
                 {
                     return str;
-                    g = true;
+                    
                 }
+                Console.WriteLine("pls check command");
                 str = Console.ReadLine();
+
             }
            
-                
-            Console.WriteLine("pls check command");
-
+          
             return null;
         
         }
@@ -204,5 +220,58 @@ namespace testSomething
 
             
         }
+
+
+    }
+
+
+    public class Revolver
+    {
+        Dictionary<string, int> Dif = new Dictionary<string, int>
+    {
+        {"easy",1 },
+        {"medium",2 },
+        {"hard",4 }
+
+    };
+
+        
+        public int countBull { get; set; }
+
+        public Revolver(string complexity) 
+        {
+           
+           this.countBull = Dif[complexity];
+        }
+
+
+         public int[] ReloadRevolver()
+        {
+            Random rng = new Random();
+
+            int[] drum = new int[5];
+
+            int count = countBull;
+            for(int i = 0; i < drum.Length; ++i)
+            {
+                if(count > 0) { drum[i] = 1; }
+                
+                drum[i] = 0;
+                count--;
+            }
+            int n = drum.Length;
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                int value = drum[k];
+                drum[k] = drum[n];
+                drum[n] = value;
+            }
+
+            return drum;
+
+        }
+
     }
 }
