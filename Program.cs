@@ -7,16 +7,28 @@ namespace testSomething
     internal class Program
     {
         private static Random rng = new Random();
-
+        private static int shoot = -1;
+        private static int dilshoot = -1;
         static void Main(string[] args)
         {
          
             var command = StartGame();
-            if (command == "info")
-                info();
-            if (command == "start")
-                NewGame();
 
+            while (true)
+            {
+                if (command == "info")
+                {
+                    info();
+                    command = Console.ReadLine();
+                }
+                    
+                if (command == "start")
+                {
+                    NewGame();
+                    break;
+                }
+                   
+            }
 
             Console.ReadLine();
         }
@@ -68,9 +80,15 @@ namespace testSomething
                 Console.WriteLine("yes/no");
 
                 var command = Console.ReadLine();
-
+                if (command == "yes")
+                    TakeCard(ref yourHand,ref value, ref cardsDeck);
+                if (command == "no")
+                {
+                    game = false;
+                    break;
+                }
             }
-            
+            CheckHand(ref value);
            
         }
 
@@ -151,12 +169,40 @@ namespace testSomething
         
 
 
-        public int DilerHand()
+        public static int DilerHand()
         {
             Random rnd = new Random();
            int value = rnd.Next(14, 21);
             return value;
         }
 
+
+        public static void CheckHand(ref int value)
+        {
+            int dilHand = DilerHand();
+
+
+            if (value > dilHand && value < 22)
+            {
+                Console.WriteLine($"diller score: {dilHand}");
+                Console.WriteLine("you win");
+                dilshoot++;
+            }
+            if (value == dilHand && value < 22)
+            {
+                Console.WriteLine($"diller score: {dilHand}");
+                Console.WriteLine("draw");
+
+                
+            }
+            if(value < dilHand && value < 22)
+            {
+                Console.WriteLine($"diller score: {dilHand}");
+                Console.WriteLine("you lose");
+                shoot++;
+            }
+
+            
+        }
     }
 }

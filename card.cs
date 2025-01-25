@@ -10,15 +10,19 @@ namespace testSomething
     {
         Dictionary<int, string> cardsName = new Dictionary<int, string>
         {
-            {0, "six" },
-            {1, "seven" },
-            {2, "eight" },
-            {3, "nine" },
-            {4, "ten" },
-            {5, "jack" },
-            {6, "queen" },
-            {7, "king" },
-            {8, "ace" }
+            {0, "two" },
+            {1, "three" },
+            {2, "four" },
+            {3, "five" },
+            {4, "six" },
+            {5, "seven" },
+            {6, "eight" },
+            {7, "nine" },
+            {8, "ten" },
+            {9, "jack" },
+            {10, "queen" },
+            {11, "king" },
+            {12, "ace" }
            
         };
         Dictionary<int, string> cardsType = new Dictionary<int, string>
@@ -30,15 +34,19 @@ namespace testSomething
         };
         Dictionary<int, int> cardsValue = new Dictionary<int, int>
         {
-            {0,6},
-            {1,7},
-            {2,8},
-            {3,9},
-            {4,10},
-            {5,10},
-            {6,10},
-            {7,10},
-            {8,1},
+            {0,2},
+            {1,3},
+            {2,4},
+            {3,5},
+            {4,6},
+            {5,7},
+            {6,8},
+            {7,9},
+            {8,10},
+            {9,10},
+            {10,10},
+            {11,10},
+            {12,1},
         };
 
 
@@ -52,7 +60,7 @@ namespace testSomething
             for(int i = 0; i < 4; i++)
             {
 
-                for(int  j = 0; j < 9; j++)
+                for(int  j = 0; j < 13; j++)
                 {
           
                   cards.Add(new Card(cardsValue[j], cardsType[i], cardsName[j]));
